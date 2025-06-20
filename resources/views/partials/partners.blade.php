@@ -53,7 +53,7 @@
                     <div class="hex-container bg-white p-6 rounded-xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-gradient-to-br from-white to-blue-50 overflow-hidden">
                         <div class="relative flex items-center justify-center w-full h-full">
                             <div class="absolute inset-0 bg-gradient-to-r from-blue-50/50 to-purple-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                            <img src="{{ asset('Partners/activision-seeklogo.png') }}" alt="Activision logo" class="h-16 w-auto max-w-[180px] object-contain relative z-10 transform group-hover:scale-125 transition-all duration-500">
+                            <img src="{{ asset('Partners/Sri_Lanka_Customs_logo.svg') }}" alt="Activision logo" class="h-16 w-auto max-w-[180px] object-contain relative z-10 transform group-hover:scale-125 transition-all duration-500">
                         </div>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
                     <div class="hex-container bg-white p-6 rounded-xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-gradient-to-br from-white to-purple-50 overflow-hidden">
                         <div class="relative flex items-center justify-center w-full h-full">
                             <div class="absolute inset-0 bg-gradient-to-r from-purple-50/50 to-pink-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                            <img src="{{ asset('Partners/rockstar-games-seeklogo.png') }}" alt="Rockstar Games logo" class="h-16 w-auto max-w-[180px] object-contain relative z-10 transform group-hover:scale-125 transition-all duration-500">
+                            <img src="{{ asset('Partners/BOC.jpg') }}" alt="Rockstar Games logo" class="h-16 w-auto max-w-[180px] object-contain relative z-10 transform group-hover:scale-125 transition-all duration-500">
                         </div>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                     <div class="hex-container bg-white p-6 rounded-xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-gradient-to-br from-white to-pink-50 overflow-hidden">
                         <div class="relative flex items-center justify-center w-full h-full">
                             <div class="absolute inset-0 bg-gradient-to-r from-pink-50/50 to-blue-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                            <img src="{{ asset('Partners/Square Enix.png') }}" alt="Square Enix logo" class="h-16 w-auto max-w-[180px] object-contain relative z-10 transform group-hover:scale-125 transition-all duration-500">
+                            <img src="{{ asset('Partners/SLASSCOM.webp') }}" alt="Square Enix logo" class="h-16 w-auto max-w-[180px] object-contain relative z-10 transform group-hover:scale-125 transition-all duration-500">
                         </div>
                     </div>
                 </div>
