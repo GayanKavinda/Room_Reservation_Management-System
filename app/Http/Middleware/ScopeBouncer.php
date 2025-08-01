@@ -1,5 +1,7 @@
 <?php
 
+/* app/Http/Middleware/ScopeBouncer.php */
+
 namespace App\Http\Middleware;
 
 use Closure;

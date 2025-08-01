@@ -1,5 +1,7 @@
 <?php
 
+/* database/migrations/2025_06_20_160310_create_locations_table.php */
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

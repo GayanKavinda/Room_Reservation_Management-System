@@ -1,4 +1,5 @@
 <!-- Featured Locations -->
+<!-- resources/views/partials/locations.blade.php -->
 <section class="py-16 px-8 bg-gradient-to-br from-white to-blue-50">
         <div class="max-w-7xl mx-auto text-center" x-intersect="$el.classList.add('animate-fadeIn')">
             <h2 class="text-2xl font-bold mb-2 text-blue-800 main-topic">Our Locations</h2>

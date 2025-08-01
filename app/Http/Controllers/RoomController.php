@@ -1,5 +1,7 @@
 <?php
 
+/* app/Http/Controllers/RoomController.php */
+
 namespace App\Http\Controllers;
 
 use App\Models\Room;

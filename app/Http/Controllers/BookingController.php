@@ -1,5 +1,7 @@
 <?php
 
+/* app/Http/Controllers/BookingController.php */
+
 namespace App\Http\Controllers;
 
 use App\Models\Booking;

@@ -1,3 +1,4 @@
+<!-- resources/views/partials/booking.blade.php -->
 <!-- Room Booking Section -->
 <section id="rooms" class="py-20 px-8 bg-white" x-data="bookingSystem()" x-intersect="$el.classList.add('animate-fadeIn')">
         <div class="max-w-7xl mx-auto">

@@ -1,5 +1,7 @@
 <?php
 
+/* app/Http/Requests/ProfileUpdateRequest.php */
+
 namespace App\Http\Requests;
 
 use App\Models\User;
