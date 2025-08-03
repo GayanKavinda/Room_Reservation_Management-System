@@ -1,19 +1,22 @@
 <?php
 
-/* app/Providers/AppServiceProvider.php */
-
+// app/Providers/AppServiceProvider.php
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
+use Silber\Bouncer\BouncerFacade as Bouncer;
 
+/**
+ * @method void registerPolicies()
+ */
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
+    protected $policies = [];
+
     public function register(): void
     {
-        //
+        // No changes needed here.
     }
 
     /**
@@ -21,6 +24,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $this->registerPolicies();
+
+        // Use a gate closure that is only evaluated when a user is present.
+        Gate::define('manage-users', function ($user) {
+            return $user->getAbilities()->contains('name', 'manage-users');
+        });
+
+        Gate::define('book-rooms', function ($user) {
+            return $user->can('book-rooms');
+        });
     }
 }

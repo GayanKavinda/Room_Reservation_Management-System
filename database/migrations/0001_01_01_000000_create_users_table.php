@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->bigInteger('account_id')->unsigned()->nullable(); // For multi-tenancy
             $table->rememberToken();
             $table->timestamps();
         });

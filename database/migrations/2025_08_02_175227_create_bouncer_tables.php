@@ -1,7 +1,5 @@
 <?php
 
-/* database/migrations/2025_03_18_091139_create_bouncer_tables.php */
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -25,6 +23,7 @@ return new class extends Migration
             $table->boolean('only_owned')->default(false);
             $table->json('options')->nullable();
             $table->integer('scope')->nullable()->index();
+            $table->unique(['name', 'scope'], 'abilities_name_scope_unique'); // Add unique constraint
             $table->timestamps();
         });
 
@@ -33,12 +32,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('title')->nullable();
             $table->integer('scope')->nullable()->index();
+            $table->unique(['name', 'scope'], 'roles_name_scope_unique'); // Add unique constraint
             $table->timestamps();
-
-            $table->unique(
-                ['name', 'scope'],
-                'roles_name_unique'
-            );
         });
 
         Schema::create(Models::table('assigned_roles'), function (Blueprint $table) {
@@ -55,9 +50,7 @@ return new class extends Migration
                 'assigned_roles_entity_index'
             );
 
-            $table->foreign('role_id')
-                ->references('id')->on(Models::table('roles'))
-                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
         });
 
         Schema::create(Models::table('permissions'), function (Blueprint $table) {
@@ -73,9 +66,7 @@ return new class extends Migration
                 'permissions_entity_index'
             );
 
-            $table->foreign('ability_id')
-                ->references('id')->on(Models::table('abilities'))
-                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('ability_id')->references('id')->on('abilities')->onDelete('cascade');
         });
     }
 
