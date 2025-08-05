@@ -32,7 +32,7 @@ Route::middleware(['auth', 'verified', \App\Http\Middleware\ScopeBouncer::class]
         Route::post('/role-assignments/revoke', [RoleAssignmentController::class, 'revoke'])->name('role-assignments.revoke');
         Route::get('/permission-assignments', [PermissionAssignmentController::class, 'index'])->name('permission-assignments.index');
         Route::match(['get', 'post'], '/permission-assignments/assign', [PermissionAssignmentController::class, 'assign'])->name('permission-assignments.assign');
-        Route::post('/permission-assignments/revoke', [PermissionAssignmentController::class, 'revoke'])->name('permission-assignments.revoke');
+        // Route::post('/permission-assignments/revoke', [PermissionAssignmentController::class, 'revoke'])->name('permission-assignments.revoke');
     });
 
     Route::get('/rooms/search', [RoomController::class, 'search'])->middleware('can:book-rooms');

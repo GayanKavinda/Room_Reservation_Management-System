@@ -39,7 +39,6 @@
                     @if ($selectedRole)
                         <div class="mb-6">
                             <h3 class="text-lg font-medium text-gray-800 mb-4">Permissions for {{ $selectedRole->title }}</h3>
-                            <!-- Add Permissions Form -->
                             <form method="POST" action="{{ route('permission-assignments.assign') }}" class="mb-4">
                                 @csrf
                                 <input type="hidden" name="role_id" value="{{ $selectedRole->id }}">
@@ -58,28 +57,7 @@
                                     </div>
                                     @error('permission_ids') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
                                 </div>
-                                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Add Permissions</button>
-                            </form>
-
-                            <!-- Remove Permissions Form -->
-                            <form method="POST" action="{{ route('permission-assignments.revoke') }}">
-                                @csrf
-                                <input type="hidden" name="role_id" value="{{ $selectedRole->id }}">
-                                <div class="mb-4">
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Remove Assigned Permissions</label>
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                        @foreach ($assignedPermissions as $permission)
-                                            <div class="flex items-center">
-                                                <input type="checkbox" name="permission_ids[]" value="{{ $permission->id }}"
-                                                       id="remove_permission_{{ $permission->id }}"
-                                                       class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded">
-                                                <label for="remove_permission_{{ $permission->id }}" class="ml-2 text-sm text-gray-700">{{ $permission->title }}</label>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                    @error('permission_ids') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
-                                </div>
-                                <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Remove Permissions</button>
+                                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Save Changes Permissions</button>
                             </form>
                         </div>
 
