@@ -15,6 +15,11 @@
                             {{ session('status') }}
                         </div>
                     @endif
+                    @if (session('error'))
+                        <div class="mb-4 font-medium text-sm text-red-600">
+                            {{ session('error') }}
+                        </div>
+                    @endif
                     <form method="POST" action="{{ route('role-assignments.assign') }}" class="mb-6">
                         @csrf
                         <div class="grid grid-cols-2 gap-4">
@@ -46,7 +51,7 @@
                         <thead>
                             <tr>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">User</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Roles</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Role</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Permissions</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
                             </tr>
@@ -56,32 +61,47 @@
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $user->name }} ({{ $user->email }})</td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        @foreach ($user->roles as $role)
-                                            {{ $role->title }}@if (!$loop->last), @endif
-                                        @endforeach
+                                        {{ $user->roles->first() ? $user->roles->first()->title : 'None' }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         @php
-                                            $abilities = $user->getAbilities();
+                                            $role = $user->roles->first();
+                                            \Silber\Bouncer\BouncerFacade::scope()->to($user->account_id ?? 1);
+                                            $abilities = $role ? \Silber\Bouncer\BouncerFacade::ability()->whereIn('id', \Illuminate\Support\Facades\DB::table('permissions')
+                                                ->where('entity_id', $role->id)
+                                                ->where('entity_type', \Silber\Bouncer\Database\Role::class)
+                                                ->where('scope', $role->scope)
+                                                ->pluck('ability_id'))->get() : collect([]);
+                                            \Illuminate\Support\Facades\Log::info('RoleAssignmentsBlade - Permissions for user', [
+                                                'user_id' => $user->id,
+                                                'user_email' => $user->email,
+                                                'role' => $role ? $role->name : 'none',
+                                                'role_id' => $role ? $role->id : null,
+                                                'scope' => $role ? $role->scope : null,
+                                                'permissions' => $abilities->pluck('name')->toArray()
+                                            ]);
                                         @endphp
                                         @foreach ($abilities as $ability)
                                             {{ $ability->title }}@if (!$loop->last), @endif
                                         @endforeach
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        @foreach ($user->roles as $role)
+                                        @if ($user->roles->first())
                                             <form action="{{ route('role-assignments.revoke') }}" method="POST" class="inline">
                                                 @csrf
                                                 <input type="hidden" name="user_id" value="{{ $user->id }}">
-                                                <input type="hidden" name="role_id" value="{{ $role->id }}">
-                                                <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('Revoke {{ $role->title }} from {{ $user->name }}?')">Revoke {{ $role->title }}</button>
+                                                <input type="hidden" name="role_id" value="{{ $user->roles->first()->id }}">
+                                                <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('Revoke {{ $user->roles->first()->title }} from {{ $user->name }}?')">Revoke {{ $user->roles->first()->title }}</button>
                                             </form>
-                                        @endforeach
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
+                    <div class="mt-4">
+                        {{ $users->links() }}
+                    </div>
                 </div>
             </div>
         </div>

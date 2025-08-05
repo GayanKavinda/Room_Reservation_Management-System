@@ -1,5 +1,7 @@
 <?php
 
+/* database/migrations/2025_08_02_175227_create_bouncer_tables.php */
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

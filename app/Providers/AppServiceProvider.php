@@ -26,7 +26,6 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        // Use a gate closure that is only evaluated when a user is present.
         Gate::define('manage-users', function ($user) {
             return $user->getAbilities()->contains('name', 'manage-users');
         });

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Silber\Bouncer\BouncerFacade as Bouncer;
+use Illuminate\Support\Facades\Log;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,7 +16,6 @@ class DatabaseSeeder extends Seeder
             RoomSeeder::class,
         ]);
 
-        // Ensure only one user with test@example.com
         $user = User::firstOrCreate(
             ['email' => 'test@example.com'],
             [
@@ -25,40 +25,40 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        // Ensure only one admin role
+        // Ensure roles
         Bouncer::role()->firstOrCreate(
             ['name' => 'admin', 'scope' => 1],
             ['title' => 'Administrator']
         );
-
-        // Ensure only one user role
         Bouncer::role()->firstOrCreate(
             ['name' => 'user', 'scope' => 1],
             ['title' => 'Regular User']
         );
 
-        // Ensure only one manage-users ability
+        // Ensure abilities
         Bouncer::ability()->firstOrCreate(
             ['name' => 'manage-users', 'scope' => 1],
             ['title' => 'Manage Users']
         );
-
-        // Ensure only one book-rooms ability
         Bouncer::ability()->firstOrCreate(
             ['name' => 'book-rooms', 'scope' => 1],
             ['title' => 'Book Rooms']
         );
+        Bouncer::ability()->firstOrCreate(
+            ['name' => 'assign-role', 'scope' => 1],
+            ['title' => 'Assign Role']
+        );
 
-        // Assign admin role to user
+        // Assign admin role and permissions
         Bouncer::scope()->to(1);
         Bouncer::assign('admin')->to($user);
+        Bouncer::allow('admin')->to(['manage-users', 'book-rooms', 'assign-role']);
+        Bouncer::allow($user)->to(['manage-users', 'book-rooms', 'assign-role']);
 
-        // Assign permissions to admin role
-        Bouncer::allow('admin')->to('manage-users');
-        Bouncer::allow('admin')->to('book-rooms');
-
-        // Assign permissions directly to the user
-        Bouncer::allow($user)->to('manage-users');
-        Bouncer::allow($user)->to('book-rooms');
+        Log::info('DatabaseSeeder::run - Seeded database with user, roles, and permissions', [
+            'user_email' => $user->email,
+            'roles' => ['admin', 'user'],
+            'abilities' => ['manage-users', 'book-rooms', 'assign-role']
+        ]);
     }
 }

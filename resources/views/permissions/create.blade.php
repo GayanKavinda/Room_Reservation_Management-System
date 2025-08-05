@@ -22,8 +22,21 @@
                             <input id="title" name="title" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
                             @error('title') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
                         </div>
-                        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Create</button>
+                        <div class="mb-4">
+                            <label for="role_ids" class="block text-sm font-medium text-gray-700">Assign to Roles (Optional)</label>
+                            <select id="role_ids" name="role_ids[]" multiple class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                @foreach ($roles as $role)
+                                    <option value="{{ $role->id }}">{{ $role->title }}</option>
+                                @endforeach
+                            </select>
+                            @error('role_ids') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+                        </div>
+                        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Create Permission</button>
                     </form>
+
+                    <div class="mt-4">
+                        {{ $roles->links() }}
+                    </div>
                 </div>
             </div>
         </div>

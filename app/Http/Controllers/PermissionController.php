@@ -18,7 +18,8 @@ class PermissionController extends Controller
 
     public function create(): View
     {
-        return view('permissions.create');
+        $roles = Bouncer::role()->paginate(15); // Fetch roles for the create form
+        return view('permissions.create', compact('roles'));
     }
 
     public function store(Request $request)
@@ -28,17 +29,29 @@ class PermissionController extends Controller
             return Redirect::route('permissions.index')->with('error', 'No authenticated user found.');
         }
 
-        Bouncer::scope()->to($user->account_id);
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255', 'unique:abilities,name,NULL,id,scope,' . $user->account_id],
             'title' => ['required', 'string', 'max:255'],
+            'role_ids' => ['nullable', 'array'], // Allow multiple roles
+            'role_ids.*' => ['exists:roles,id'], // Validate each role ID
         ]);
 
-        Bouncer::ability()->create([
+        Bouncer::scope()->to($user->account_id);
+        $permission = Bouncer::ability()->create([
             'name' => $validated['name'],
             'title' => $validated['title'],
             'scope' => $user->account_id,
         ]);
+
+        // Assign the permission to selected roles
+        if (!empty($validated['role_ids'])) {
+            foreach ($validated['role_ids'] as $roleId) {
+                $role = Bouncer::role()->findOrFail($roleId);
+                if ($role->scope === $user->account_id) { // Ensure scope matches
+                    Bouncer::allow($role->name)->to($permission->name);
+                }
+            }
+        }
 
         return Redirect::route('permissions.index')->with('status', 'permission-created');
     }

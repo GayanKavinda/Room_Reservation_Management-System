@@ -1,4 +1,3 @@
-<!-- resources/views/layouts/navigation.blade.php -->
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -25,6 +24,9 @@
                         </x-nav-link>
                         <x-nav-link :href="route('role-assignments.index')" :active="request()->routeIs('role-assignments.*')">
                             {{ __('Role Assignments') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('permission-assignments.assign')" :active="request()->routeIs('permission-assignments.assign')">
+                            {{ __('Assign Permissions') }}
                         </x-nav-link>
                     @endcan
                 </div>
@@ -81,11 +83,17 @@
                 <x-responsive-nav-link :href="route('roles.index')" :active="request()->routeIs('roles.*')">
                     {{ __('Roles') }}
                 </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('permissions.create')" :active="request()->routeIs('permissions.create')">
+                    {{ __('Create Permission') }}
+                </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('permissions.index')" :active="request()->routeIs('permissions.*')">
                     {{ __('Permissions') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('role-assignments.index')" :active="request()->routeIs('role-assignments.*')">
                     {{ __('Role Assignments') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('permission-assignments.assign')" :active="request()->routeIs('permission-assignments.assign')">
+                    {{ __('Assign Permissions') }}
                 </x-responsive-nav-link>
             @endcan
         </div>
